@@ -14,6 +14,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/cargoa')
 app.use(express.json())
 
 app.post('/create', user.registerUser)
+app.post('/login', user.loginUser)
 
 
 app.listen(3000, () => {
