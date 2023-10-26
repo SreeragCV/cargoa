@@ -11,20 +11,20 @@ const productSchema = new Schema({
     required: true,
   },
   shippingDate: {
-    type: String,
+    type: Date,
     required: true
   }
   ,
   shippingSchedule1: {
-    type: String,
+    type: Date,
   },
 
   shippingSchedule2: {
-    type: String,
+    type: Date,
   },
 
   shippingSchedule3: {
-    type: String,
+    type: Date,
   },
   userID: {
     type: Schema.Types.ObjectId,
@@ -33,7 +33,7 @@ const productSchema = new Schema({
   },
   vendorID: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
+    ref:'User',
     required: true
   }
 });

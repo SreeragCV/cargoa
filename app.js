@@ -1,7 +1,9 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
-const user = require('./controllers/users')
+const {registerUser, loginUser} = require('./controllers/users');
+const {CreateProduct} = require('./controllers/products');
+const {verifyUserToken} = require('./middleware/middleware');
 
 mongoose.connect('mongodb://127.0.0.1:27017/cargoa')
 .then(() => {
@@ -13,8 +15,9 @@ mongoose.connect('mongodb://127.0.0.1:27017/cargoa')
 
 app.use(express.json())
 
-app.post('/create', user.registerUser)
-app.post('/login', user.loginUser)
+app.post('/create', registerUser)
+app.post('/login', loginUser)
+app.post('/createproduct', verifyUserToken, CreateProduct)
 
 
 app.listen(3000, () => {

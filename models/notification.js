@@ -11,14 +11,9 @@ const notificationSchema = new Schema({
         default: false,
         required: true
     },
-    vendorID: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    },
     userID: {
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
     },
     purchaseID: {
         type: Schema.Types.ObjectId,
