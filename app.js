@@ -1,9 +1,9 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
-const {registerUser, loginUser} = require('./controllers/users');
-const {CreateProduct} = require('./controllers/products');
-const {verifyUserToken} = require('./middleware/middleware');
+const { registerUser, loginUser } = require('./controllers/users');
+const { CreateProduct } = require('./controllers/products');
+const { verifyUserToken } = require('./middleware/middleware');
 
 mongoose.connect('mongodb://127.0.0.1:27017/cargoa')
 .then(() => {

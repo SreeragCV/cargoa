@@ -1,5 +1,7 @@
 const Product = require("../models/product");
 const User = require("../models/user");
+const Notification = require('../models/notification');
+const { notificationMessage } = require("./notification");
 
 module.exports.CreateProduct = async (req, res) => {
   try {
@@ -11,10 +13,11 @@ module.exports.CreateProduct = async (req, res) => {
         const product = new Product({ name, quantity, shippingDate });
         product.vendorID = vendor;
         product.userID = currentUser;
-        res.send(product);
         await product.save();
+        notificationMessage(currentUser, product)      
+        res.send(product);
       } else {
-        res.status(400).json("YOU ARE NOT A USER");
+        res.status(400).json("ONLY USER CAN ORDER A PRODUCT");
       }
     } else {
       res.status(400).json("CHOOSE A PROPER VENDOR");

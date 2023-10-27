@@ -14,6 +14,7 @@ const notificationSchema = new Schema({
     userID: {
         type: Schema.Types.ObjectId,
         ref: 'User',
+        required: true
     },
     purchaseID: {
         type: Schema.Types.ObjectId,
