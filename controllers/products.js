@@ -26,3 +26,12 @@ module.exports.CreateProduct = async (req, res) => {
     res.status(500).json(err);
   }
 };
+
+module.exports.vendorResponse =async(req, res) => {
+  try{
+    const purchaseID = req.params.id
+    
+  } catch(err){
+
+  }
+}
