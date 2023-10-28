@@ -1,7 +1,8 @@
 const Product = require("../models/product");
 const User = require("../models/user");
-const Notification = require('../models/notification');
+const Notification = require("../models/notification");
 const { notificationMessage } = require("./notification");
+
 
 module.exports.CreateProduct = async (req, res) => {
   try {
@@ -14,7 +15,7 @@ module.exports.CreateProduct = async (req, res) => {
         product.vendorID = vendor;
         product.userID = currentUser;
         await product.save();
-        notificationMessage(currentUser, product)      
+        notificationMessage(currentUser, product);
         res.send(product);
       } else {
         res.status(400).json("ONLY USER CAN ORDER A PRODUCT");
@@ -26,12 +27,3 @@ module.exports.CreateProduct = async (req, res) => {
     res.status(500).json(err);
   }
 };
-
-module.exports.vendorResponse =async(req, res) => {
-  try{
-    const purchaseID = req.params.id
-    
-  } catch(err){
-
-  }
-}
