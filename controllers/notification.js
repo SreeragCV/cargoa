@@ -16,41 +16,49 @@ module.exports.notificationMessage = async (currentUser, product) => {
 };
 
 const checkProducts = (products) => {
-  const verify = products.filter((product) => {
-    const one = product.shippingSchedule1;
-    const two = product.shippingSchedule2;
-    const three = product.shippingSchedule3;
-    return one === undefined && two === undefined && three === undefined;
-  });
-  return verify;
+  if (products.length > 0) {
+    const one = products[0].shippingSchedule1;
+    const two = products[0].shippingSchedule1;
+    const three = products[0].shippingSchedule1;
+    if (one === undefined && two === undefined && three === undefined) {
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    return false;
+  }
 };
 
 module.exports.responseNotification = async (req, res) => {
-  try{
-  const { id } = req.params;
-  const { shippingSchedule1, shippingSchedule2, shippingSchedule3 } = req.body;
-  const user = await User.find({ email: req.user.email });
-  const verifiedProducts = await Product.find({
-    vendorID: id,
-    userID: user[0]._id,
-  });
-  const verify = checkProducts(verifiedProducts);
-  if (verify.length > 0) {
-    if (verifiedProducts.length > 0) {
-      verify.map(async (e) => {
-        const data = await Product.findByIdAndUpdate(e._id, {
-          shippingSchedule1,
-          shippingSchedule2,
-          shippingSchedule3,
+  try {
+    const { id } = req.params;
+    const { shippingSchedule1, shippingSchedule2, shippingSchedule3 } =
+      req.body;
+    const user = await User.find({ email: req.user.email });
+    const verifiedProduct = await Product.find({
+      _id: id,
+      vendorID: user[0]._id,
+    });
+    console.log(req.user);
+    console.log(verifiedProduct);
+    if (req.user.role === "vendor") {
+      if (checkProducts(verifiedProduct)) {
+        verifiedProduct.map(async (e) => {
+          const data = await Product.findByIdAndUpdate(e._id, {
+            shippingSchedule1,
+            shippingSchedule2,
+            shippingSchedule3,
+          });
         });
-      });
+        res.send("DATE UPDATED");
+      } else {
+        res.status(401).send("DATE ALREADY UPDATED OR THERE ARE NO PRODUCT TO UPDATE");
+      }
     } else {
-      res.status(401).json("NOT A VERIFIED VENDOR");
+      res.status(401).send("NOT A VERIFIED VENDOR");
     }
-  } else {
-    res.status(501).json("ALREADY UPDATED");
+  } catch (e) {
+    res.status(400).json("ERROR...", e);
   }
-} catch(e){
-  res.status(400).json('ERROR...', e)
-}
 };
