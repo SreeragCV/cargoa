@@ -31,7 +31,7 @@ module.exports.loginUser = async (req, res) => {
     const userPassword = user[0].hashPassword;
     const validPassword = await bcrypt.compare(password, userPassword);
     if (validPassword) {
-      const payload = { role: user[0].role, email: user[0].email };
+      const payload = { role: user[0].role, email: user[0].email, id: user[0]._id };
       const token = jwt.sign(payload, process.env.TOKEN_SECRET, {
         expiresIn: "3600s",
       });

@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const { registerUser, loginUser } = require('./controllers/users');
-const { CreateProduct } = require('./controllers/products');
+const { CreateProduct, getProducts } = require('./controllers/products');
 const { verifyUserToken } = require('./middleware/middleware');
 const { responseNotification } = require('./controllers/notification');
 
@@ -20,6 +20,7 @@ app.post('/register', registerUser)
 app.post('/login', loginUser)
 app.post('/createproduct', verifyUserToken, CreateProduct)
 app.post('/check/:id', verifyUserToken, responseNotification)
+app.get('/myproducts', verifyUserToken, getProducts)
 
 
 app.listen(3000, () => {

@@ -27,3 +27,15 @@ module.exports.CreateProduct = async (req, res) => {
     res.status(500).json(err);
   }
 };
+
+
+module.exports.getProducts = async(req, res) => {
+  console.log(req.user);
+  if(req.user.role === "user"){
+    const userProducts = await Product.find({userID: req.user.id});
+    return res.send(userProducts)
+  } else if(req.user.role === "vendor"){
+    const vendorProducts = await Product.find({vendorID: req.user.id});
+    return res.send(vendorProducts)
+  }
+}
